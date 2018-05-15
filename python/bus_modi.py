@@ -14,7 +14,7 @@ import sys
 
 graph9bus=igraph.Graph() 
     
-with open(str(sys.argv[1]) + 'busnode.csv','rb') as csvfileNode:
+with open(str(sys.argv[1]),'rb') as csvfileNode:
     csvreaderNode=csv.reader(csvfileNode)
     mycsvNode=list(csvreaderNode)
     for row in mycsvNode:
@@ -24,7 +24,7 @@ nodeNumber=graph9bus.vcount()
 
 Bmatrix=numpy.zeros((nodeNumber,nodeNumber))
 SVQ=numpy.zeros((nodeNumber,nodeNumber))
-with open(str(sys.argv[1]) + 'busbranch.csv','rb') as csvfileBranch:
+with open(str(sys.argv[2]),'rb') as csvfileBranch:
     csvreaderBranch=csv.reader(csvfileBranch)
     mycsvBranch=list(csvreaderBranch)
     for row in mycsvBranch:
@@ -43,7 +43,7 @@ for i in range(nodeNumber):
 SVQ=numpy.linalg.pinv(Bmatrix)
 #print SVQ
 
-with open(str(sys.argv[1]) + 'busQ.csv','rb') as csvfileQ:
+with open(str(sys.argv[3]),'rb') as csvfileQ:
     csvreaderQ=csv.reader(csvfileQ)
     mycsvQ=list(csvreaderQ)
     for row in mycsvQ:
