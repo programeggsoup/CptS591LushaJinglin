@@ -60,6 +60,6 @@ mod=graph9bus.modularity(clusters)
 newmod=modification.modification(mod,graph9bus,SVQ,clusters)
 
 end_time = time.time()
-print 'Degree distribution',graph9bus.degree_distribution()
-print 'Running time:',(end_time - start_time)
-print 'New mod',newmod
+print 'Degree distribution: ',graph9bus.degree_distribution()
+print 'Running time: ',(end_time - start_time)
+print 'New mod: ',newmod
