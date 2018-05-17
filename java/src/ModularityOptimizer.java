@@ -20,8 +20,9 @@ import java.util.Random;
 public class ModularityOptimizer
 
 {
-
-    static double[][] svq = new double[118][118];
+    static String qsupplyFileName;
+    static String qdemandFileName;
+    static String svqFileName;
 
     public static void main(String[] args) throws IOException
     {
@@ -36,21 +37,7 @@ public class ModularityOptimizer
         String inputFileName, outputFileName;
         VOSClusteringTechnique VOSClusteringTechnique;
 
-        BufferedReader bufferedReader;
-        bufferedReader = new BufferedReader(new FileReader("data/data.txt"));
-        String line;
-        int count = 0;
-        while ((line = bufferedReader.readLine()) != null){
-            String[] tokens = line.split(",");
-            double[] svqi = new double[118];
-            for(int ii = 0; ii < 118; ii++){
-                svqi[ii] = Double.parseDouble(tokens[ii]);
-            }
-            svq[count] = svqi;
-        }
-        bufferedReader.close();
-
-        if (args.length == 9)
+        if (args.length == 12)
         {
             inputFileName = args[0];
             outputFileName = args[1];
@@ -61,6 +48,9 @@ public class ModularityOptimizer
             nIterations = Integer.parseInt(args[6]);
             randomSeed = Long.parseLong(args[7]);
             printOutput = (Integer.parseInt(args[8]) > 0);
+            qsupplyFileName = args[9];
+            qdemandFileName = args[10];
+            svqFileName = args[11];
 
             if (printOutput)
             {

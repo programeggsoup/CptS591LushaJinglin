@@ -6,6 +6,10 @@
  * @version 1.3.1, 11/23/14
  */
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class VOSClusteringTechnique
@@ -59,12 +63,12 @@ public class VOSClusteringTechnique
         this.resolution = resolution;
     }
 
-    public double calcQualityFunction()
-    {
+    public double calcQualityFunction() throws IOException {
         double qualityFunction;
         double[] clusterWeight;
         int i, j, k;
 
+        /* calculate the modularity */
         qualityFunction = 0;
 
         for (i = 0; i < network.nNodes; i++)
@@ -84,32 +88,53 @@ public class VOSClusteringTechnique
 
         qualityFunction /= 2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks;
 
+        /* find the cluster number */
         int max = 0;
         for (i = 0; i < network.nNodes; i++){
-            if(clustering.cluster[i]>max)
+            if(clustering.cluster[i] > max)
                 max = clustering.cluster[i];
         }
         max++;
+
+        /* read in the svq, qsupply and qdemand */
+        /* qsupply */
+        BufferedReader bufferedReader;
+        bufferedReader = new BufferedReader(new FileReader(ModularityOptimizer.qsupplyFileName)); /* "data/data.txt" */
+        double[] Qsupply = new double[network.nNodes];
+        String[] tokensQs = bufferedReader.readLine().split(",");
+        for (int ii = 0; ii < tokensQs.length; ii++){
+            Qsupply[ii] = Double.parseDouble(tokensQs[ii]);
+        }
+        bufferedReader.close();
+
+        /* qdemand */
+        bufferedReader = new BufferedReader(new FileReader(ModularityOptimizer.qdemandFileName));
+        double[] Qdemand = new double[network.nNodes];
+        String[] tokensQd = bufferedReader.readLine().split(",");
+        for (int ii = 0; ii < tokensQd.length; ii++){
+            Qdemand[ii] = Double.parseDouble(tokensQs[ii]);
+        }
+        bufferedReader.close();
+
+        /* svq */
+        String line;
+        bufferedReader = new BufferedReader(new FileReader(ModularityOptimizer.svqFileName));
+        double[][] svq = new double[network.nNodes][network.nNodes];
+        int count = 0;
+        while ((line = bufferedReader.readLine()) != null){
+            String[] tokens = line.split(",");
+            double[] svqi = new double[network.nNodes];
+            for(int ii = 0; ii < network.nNodes; ii++){
+                svqi[ii] = Double.parseDouble(tokens[ii]);
+            }
+            svq[count] = svqi;
+        }
+        bufferedReader.close();
+
         List<Double> sensitivity = new ArrayList<>();
         List<Double> Qbalance = new ArrayList<>();
-        //int[] Qsupply = {100,100,100,0,0,0,0,0,0};
-        //int[] Qdemand = {0,20,30,20,10,20,10,20,30};
-        //int[] Qsupply = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,400,300,300,250,167,300,240,250,300,300};
-        //double[] Qdemand = {44.2,0,2.4,184,0,0,84,176.6,-66.6,0,0,88,0,0,153,32.3,0,30,0,103,115,0,84.6,-92.2,47.2,17,75.5,27.6,26.9,0,4.6,0,0,0,0,0,0,0,250};
-        int[] Qsupply = {15,0,0,300,0,50,0,300,0,200,0,120,0,0,30,0,0,50,24,0,0,0,0,300,140,1000,300,0,0,0,300,42,0,24,0,24,0,0,0,300,0,300,0,0,0,100,0,0,210,0,0,0,0,300,23,15,0,0,180,0,300,20,0,0,200,200,0,0,300,32,0,100,100,9,0,23,70,0,0,280,0,0,0,0,23,0,1000,0,300,300,100,9,0,0,0,0,0,0,100,155,0,0,40,23,23,0,200,0,0,23,1000,1000,200,0,0,1000,0,0};
-        double[] Qdemand = {27,9,10,12,0,22,2,0,0,0,23,10,16,1,30,10,3,34,25,3,8,5,3,0,0,0,13,7,4,0,27,23,9,26,9,17,0,0,11,23,10,23,7,8,22,10,0,11,30,4,8,5,11,32,22,18,3,3,113,3,0,14,0,0,0,18,7,0,0,20,0,0,0,27,11,36,28,26,32,26,0,27,10,7,15,10,0,10,0,42,0,10,7,16,31,15,9,8,0,18,15,3,16,25,26,16,12,1,3,30,0,13,0,3,7,0,8,15};
         int[] Qs = new int[max];
         int[] Qd = new int[max];
-        /*double[][] svq = {{0.10159104,-0.03955934,-0.03957958,0.05039104,0.01451888,-0.03306847,-0.0375356,-0.0326149,0.01585694}
-                ,{-0.03955934,0.10146739,-0.02425666,-0.03315934,-0.03471069,-0.01774555,0.01465622,0.04591183,-0.01260385}
-                ,{-0.03957958,-0.02425666,0.1026502,-0.03317958,-0.01101329,0.05056131,0.00623672,-0.01731221,-0.0341069}
-                ,{0.05039104,-0.03315934,-0.03317958,0.05679104,0.02091888,-0.02666847,-0.0311356,-0.0262149,0.02225694}
-                ,{0.01451888,-0.03471069,-0.01101329,0.02091888,0.06730891,-0.00450218,-0.02280459,-0.02776625,-0.00194966}
-                ,{-0.03306847,-0.01774555,0.05056131,-0.02666847,-0.00450218,0.05707242,0.01274783,-0.0108011,-0.02759578}
-                ,{-0.0375356,0.01465622,0.00623672,-0.0311356,-0.02280459,0.01274783,0.05576563,0.02160066,-0.01953127}
-                ,{-0.0326149,0.04591183,-0.01731221,-0.0262149,-0.02776625,-0.0108011,0.02160066,0.05285627,-0.0056594}
-                ,{0.01585694,-0.01260385,-0.0341069,0.02225694,-0.00194966,-0.02759578,-0.01953127,-0.0056594,0.06333297}};*/
-
         double[] evq = new double[max];
         int[] com_number = new int[max];
 
@@ -120,7 +145,7 @@ public class VOSClusteringTechnique
             for(int ii = i+1; ii < network.nNodes; ii++){
                 int jj = clustering.cluster[ii];
                 if(j == jj){
-                    evq[j] += ModularityOptimizer.svq[i][ii];
+                    evq[j] += svq[i][ii];
                     com_number[j] ++;
                 }
             }
