@@ -12,6 +12,6 @@ To run Python code:
 
 Example Java code Arguments:
 
-data\pbmc_raw9.txt data\output.txt 1 1 2 10 10 336 1 data\9busQsupply.txt data\9busQdemand.txt data\9busSVQ.txt
+data\pbmc_raw9.txt data\output.txt 1 1 2 10 500 336 1 data\9busQsupply.txt data\9busQdemand.txt data\9busSVQ.txt
 
 If you want to calculate other bus systems, you can just change the file name: "data\pbmc_raw9.txt" and "data\9busQsupply.txt data\9busQdemand.txt data\9busSVQ.txt".
