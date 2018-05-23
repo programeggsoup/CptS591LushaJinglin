@@ -154,7 +154,7 @@ public class ModularityOptimizer
             else
                 System.out.format("Maximum modularity in %d random starts: %.4f%n", nRandomStarts, maxModularity);
             System.out.format("Number of communities: %d%n", clustering.getNClusters());
-            System.out.format("Elapsed time: %f ms%n", Math.round((endTime - beginTime))/10.0);
+            System.out.format("Elapsed time: %f ms%n", Math.round((endTime - beginTime))/(nRandomStarts * 1.0));
             System.out.println();
             System.out.println("Writing output file...");
             System.out.println();
