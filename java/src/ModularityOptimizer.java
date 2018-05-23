@@ -37,7 +37,7 @@ public class ModularityOptimizer
         String inputFileName, outputFileName;
         VOSClusteringTechnique VOSClusteringTechnique;
 
-        if (args.length == 12)
+       if (args.length == 12)
         {
             inputFileName = args[0];
             outputFileName = args[1];
@@ -48,6 +48,7 @@ public class ModularityOptimizer
             nIterations = Integer.parseInt(args[6]);
             randomSeed = Long.parseLong(args[7]);
             printOutput = (Integer.parseInt(args[8]) > 0);
+            // reactive power information input
             qsupplyFileName = args[9];
             qdemandFileName = args[10];
             svqFileName = args[11];

@@ -101,7 +101,7 @@ public class VOSClusteringTechnique
         BufferedReader bufferedReader;
         bufferedReader = new BufferedReader(new FileReader(ModularityOptimizer.qsupplyFileName)); /* "data/data.txt" */
         double[] Qsupply = new double[network.nNodes];
-        String[] tokensQs = bufferedReader.readLine().split(",");
+        String[] tokensQs = bufferedReader.readLine().split("\n");
         for (int ii = 0; ii < tokensQs.length; ii++){
             Qsupply[ii] = Double.parseDouble(tokensQs[ii]);
         }
@@ -110,7 +110,7 @@ public class VOSClusteringTechnique
         /* qdemand */
         bufferedReader = new BufferedReader(new FileReader(ModularityOptimizer.qdemandFileName));
         double[] Qdemand = new double[network.nNodes];
-        String[] tokensQd = bufferedReader.readLine().split(",");
+        String[] tokensQd = bufferedReader.readLine().split("\n");
         for (int ii = 0; ii < tokensQd.length; ii++){
             Qdemand[ii] = Double.parseDouble(tokensQs[ii]);
         }
@@ -122,7 +122,7 @@ public class VOSClusteringTechnique
         double[][] svq = new double[network.nNodes][network.nNodes];
         int count = 0;
         while ((line = bufferedReader.readLine()) != null){
-            String[] tokens = line.split(",");
+            String[] tokens = line.split("\t");
             double[] svqi = new double[network.nNodes];
             for(int ii = 0; ii < network.nNodes; ii++){
                 svqi[ii] = Double.parseDouble(tokens[ii]);

@@ -2,7 +2,7 @@
 """
 Created on Tue May 15 10:47:30 2018
 
-@author: Jinglin
+@author: Lusha,Jinglin
 """
 
 import csv
@@ -12,54 +12,78 @@ import modification
 import time
 import sys
 
-graph9bus=igraph.Graph() 
-    
+# create graph for the network
+networkGraph=igraph.Graph() 
+
 with open(str(sys.argv[1]),'rb') as csvfileNode:
     csvreaderNode=csv.reader(csvfileNode)
     mycsvNode=list(csvreaderNode)
     for row in mycsvNode:
-        graph9bus.add_vertex(name=row[0])
+        networkGraph.add_vertex(name=row[0])
         
-nodeNumber=graph9bus.vcount()
-
+nodeNumber=networkGraph.vcount()
 Bmatrix=numpy.zeros((nodeNumber,nodeNumber))
 SVQ=numpy.zeros((nodeNumber,nodeNumber))
+
 with open(str(sys.argv[2]),'rb') as csvfileBranch:
     csvreaderBranch=csv.reader(csvfileBranch)
     mycsvBranch=list(csvreaderBranch)
     for row in mycsvBranch:
         B=(1/complex(float(row[2]),float(row[3]))).imag
-        graph9bus.add_edge(row[0],row[1])
+        networkGraph.add_edge(row[0],row[1])
         Bmatrix[int(row[0])-1,int(row[1])-1]=B
         Bmatrix[int(row[1])-1,int(row[0])-1]=B
 
-#print Bmatrix
 for i in range(nodeNumber):
     for j in range(nodeNumber):
         if j!=i:
             Bmatrix[i,i]=Bmatrix[i,i]-Bmatrix[i,j]
         
-#print 'Bmtarix',Bmatrix     
 SVQ=numpy.linalg.pinv(Bmatrix)
-#print SVQ
 
 with open(str(sys.argv[3]),'rb') as csvfileQ:
     csvreaderQ=csv.reader(csvfileQ)
     mycsvQ=list(csvreaderQ)
+    fQs = open('Qsupply.txt','w')
+    fQd = open('Qdemand.txt','w')
     for row in mycsvQ:
-        #print row[1]
-        graph9bus.vs.select(int(row[0])-1)["Qsupply"]=float(row[1])
-        graph9bus.vs.select(int(row[0])-1)["Qdemand"]=float(row[2])
+        networkGraph.vs.select(int(row[0])-1)["Qsupply"]=float(row[1])
+        networkGraph.vs.select(int(row[0])-1)["Qdemand"]=float(row[2])
+        fQs.write(row[1]+'\n')
+        fQd.write(row[2]+'\n')
+    fQs.close()
+    fQd.close()
+    
+fNI = open('networkInfo.txt','w')
+es =  igraph.EdgeSeq(networkGraph)
+for edge in es:
+    print edge.tuple
+    fNI.write(str(edge.tuple[0])+'\t')
+    fNI.write(str(edge.tuple[1]))
+    fNI.write('\n')
+fNI.close()
 
+fSVQ = open('SVQ.txt','w')
+rowN, colN =  SVQ.shape
+print str(rowN)+' '+str(colN)
+for x in range(0,rowN):
+    for y in range(0,colN):
+        fSVQ.write(str(SVQ[x,y])+'\t')
+    fSVQ.write('\n')
+    
+fSVQ.close()
+'''
 # using Louvain
 start_time = time.time()
-clusters=graph9bus.community_multilevel()
-mod=graph9bus.modularity(clusters)
+clusters=networkGraph.community_multilevel()
+mod=networkGraph.modularity(clusters)
 
 #louvain.louvain(graph9bus,SVQ)
-newmod=modification.modification(mod,graph9bus,SVQ,clusters)
+newmod=modification.modification(mod,networkGraph,SVQ,clusters)
 
 end_time = time.time()
-print 'Degree distribution: ',graph9bus.degree_distribution()
+print 'Degree distribution: ',networkGraph.degree_distribution()
 print 'Running time: ',(end_time - start_time)
 print 'New mod: ',newmod
+'''
+
