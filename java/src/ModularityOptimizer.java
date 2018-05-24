@@ -16,7 +16,7 @@ public class ModularityOptimizer
     static double[] Qdemand;
     static double[][] svq;
 
-    public String test(String aa,String ab,String ac,String ad,String ae,String af,String ag,String ah,String ai,String aj,String ak,String al) throws IOException
+    public String test(String inputfilename,String outputfilename,String modularityfunction,String res,String alg,String nrandom,String niter,String seed,String output,String qsupply,String qdemand,String svqinfo) throws IOException
     {
         boolean printOutput, update;
         Clustering clustering;
@@ -32,19 +32,19 @@ public class ModularityOptimizer
         String qdemandFileName;
         String svqFileName;
 
-        inputFileName = aa;
-        outputFileName = ab;
-        modularityFunction = Integer.parseInt(ac);
-        resolution = Double.parseDouble(ad);
-        algorithm = Integer.parseInt(ae);
-        nRandomStarts = Integer.parseInt(af);
-        nIterations = Integer.parseInt(ag);
-        randomSeed = Long.parseLong(ah);
-        printOutput = (Integer.parseInt(ai) > 0);
+        inputFileName = inputfilename;
+        outputFileName = outputfilename;
+        modularityFunction = Integer.parseInt(modularityfunction);
+        resolution = Double.parseDouble(res);
+        algorithm = Integer.parseInt(alg);
+        nRandomStarts = Integer.parseInt(nrandom);
+        nIterations = Integer.parseInt(niter);
+        randomSeed = Long.parseLong(seed);
+        printOutput = (Integer.parseInt(output) > 0);
         // reactive power information input
-        qsupplyFileName = aj;
-        qdemandFileName = ak;
-        svqFileName = al;
+        qsupplyFileName = qsupply;
+        qdemandFileName = qdemand;
+        svqFileName = svqinfo;
 
         System.out.println("Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck");
 
