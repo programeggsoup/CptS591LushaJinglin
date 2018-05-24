@@ -11,6 +11,10 @@ import numpy
 import modification
 import time
 import sys
+import os
+import jpype
+from jpype import JavaException
+
 
 # create graph for the network
 networkGraph=igraph.Graph() 
@@ -65,7 +69,7 @@ fNI.close()
 
 fSVQ = open('SVQ.txt','w')
 rowN, colN =  SVQ.shape
-print str(rowN)+' '+str(colN)
+#print str(rowN)+' '+str(colN)
 for x in range(0,rowN):
     for y in range(0,colN):
         fSVQ.write(str(SVQ[x,y])+'\t')
@@ -87,3 +91,20 @@ print 'Running time: ',(end_time - start_time)
 print 'New mod: ',newmod
 '''
 
+# call Java function
+jvmPath = jpype.getDefaultJVMPath() 
+classpath = "C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\java\\out\\production\\multilevel"
+jvmArg = "-Djava.class.path=" + classpath 
+if not jpype.isJVMStarted():
+    jpype.startJVM(jvmPath,jvmArg)
+#jpype.java.lang.System.out.println("hello world!") 
+#jpype.shutdownJVM()
+ModularityOptimizer = jpype.JClass("ModularityOptimizer")     
+m = ModularityOptimizer()   
+try:   
+    print m.test("C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\networkInfo.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\output.txt","1","1","2","10000","10","336","1","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\Qsupply.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\Qdemand.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\SVQ.txt")
+except jpype.JavaException, ex:
+    print ex.javaClass(), ex.message()
+    print ex.stacktrace() 
+
+jpype.shutdownJVM()
