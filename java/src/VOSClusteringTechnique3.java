@@ -6,19 +6,18 @@
  * @version 1.3.1, 11/23/14
  */
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-public class VOSClusteringTechnique
+public class VOSClusteringTechnique3
 {
     protected Network network;
     protected Clustering clustering;
     protected double resolution;
 
-    public VOSClusteringTechnique(Network network, double resolution)
+    public VOSClusteringTechnique3(Network network, double resolution)
     {
         this.network = network;
         clustering = new Clustering(network.nNodes);
@@ -26,7 +25,7 @@ public class VOSClusteringTechnique
         this.resolution = resolution;
     }
 
-    public VOSClusteringTechnique(Network network, Clustering clustering, double resolution)
+    public VOSClusteringTechnique3(Network network, Clustering clustering, double resolution)
     {
         this.network = network;
         this.clustering = clustering;
@@ -105,12 +104,12 @@ public class VOSClusteringTechnique
 
         for (i = 0; i < network.nNodes; i++){
             j = clustering.cluster[i];
-            Qs[j] += ModularityOptimizer.Qsupply[i];
-            Qd[j] += ModularityOptimizer.Qdemand[i];
+            Qs[j] += ModularityOptimizer3.Qsupply[i];
+            Qd[j] += ModularityOptimizer3.Qdemand[i];
             for(int ii = i+1; ii < network.nNodes; ii++){
                 int jj = clustering.cluster[ii];
                 if(j == jj){
-                    evq[j] += ModularityOptimizer.svq[i][ii];
+                    evq[j] += ModularityOptimizer3.svq[i][ii];
                     com_number[j] ++;
                 }
             }
@@ -252,7 +251,7 @@ public class VOSClusteringTechnique
     public boolean runLouvainAlgorithm(Random random)
     {
         boolean update, update2;
-        VOSClusteringTechnique VOSClusteringTechnique;
+        VOSClusteringTechnique3 VOSClusteringTechnique;
 
         if (network.nNodes == 1)
             return false;
@@ -261,7 +260,7 @@ public class VOSClusteringTechnique
 
         if (clustering.nClusters < network.nNodes)
         {
-            VOSClusteringTechnique = new VOSClusteringTechnique(network.createReducedNetwork(clustering), resolution);
+            VOSClusteringTechnique = new VOSClusteringTechnique3(network.createReducedNetwork(clustering), resolution);
 
             update2 = VOSClusteringTechnique.runLouvainAlgorithm(random);
 
@@ -304,7 +303,7 @@ public class VOSClusteringTechnique
     public boolean runLouvainAlgorithmWithMultilevelRefinement(Random random)
     {
         boolean update, update2;
-        VOSClusteringTechnique VOSClusteringTechnique;
+        VOSClusteringTechnique3 VOSClusteringTechnique;
 
         if (network.nNodes == 1)
             return false;
@@ -313,7 +312,7 @@ public class VOSClusteringTechnique
 
         if (clustering.nClusters < network.nNodes)
         {
-            VOSClusteringTechnique = new VOSClusteringTechnique(network.createReducedNetwork(clustering), resolution);
+            VOSClusteringTechnique = new VOSClusteringTechnique3(network.createReducedNetwork(clustering), resolution);
 
             update2 = VOSClusteringTechnique.runLouvainAlgorithmWithMultilevelRefinement(random);
 
@@ -362,7 +361,7 @@ public class VOSClusteringTechnique
         int[] nNodesPerClusterReducedNetwork;
         int[][] nodePerCluster;
         Network[] subnetwork;
-        VOSClusteringTechnique VOSClusteringTechnique;
+        VOSClusteringTechnique3 VOSClusteringTechnique;
 
         if (network.nNodes == 1)
             return false;
@@ -379,7 +378,7 @@ public class VOSClusteringTechnique
             nNodesPerClusterReducedNetwork = new int[subnetwork.length];
             for (i = 0; i < subnetwork.length; i++)
             {
-                VOSClusteringTechnique = new VOSClusteringTechnique(subnetwork[i], resolution);
+                VOSClusteringTechnique = new VOSClusteringTechnique3(subnetwork[i], resolution);
 
                 VOSClusteringTechnique.runLocalMovingAlgorithm(random);
 
@@ -389,7 +388,7 @@ public class VOSClusteringTechnique
                 nNodesPerClusterReducedNetwork[i] = VOSClusteringTechnique.clustering.nClusters;
             }
 
-            VOSClusteringTechnique = new VOSClusteringTechnique(network.createReducedNetwork(clustering), resolution);
+            VOSClusteringTechnique = new VOSClusteringTechnique3(network.createReducedNetwork(clustering), resolution);
 
             i = 0;
             for (j = 0; j < nNodesPerClusterReducedNetwork.length; j++)
@@ -469,9 +468,9 @@ public class VOSClusteringTechnique
     {
         int i, j, k;
         int[] nNodesPerCluster;
-        VOSClusteringTechnique VOSClusteringTechnique;
+        VOSClusteringTechnique3 VOSClusteringTechnique;
 
-        VOSClusteringTechnique = new VOSClusteringTechnique(network.createReducedNetwork(clustering), resolution);
+        VOSClusteringTechnique = new VOSClusteringTechnique3(network.createReducedNetwork(clustering), resolution);
 
         nNodesPerCluster = clustering.getNNodesPerCluster();
 

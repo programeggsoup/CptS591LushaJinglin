@@ -6,29 +6,17 @@
  * @version 1.3.0, 08/31/15
  */
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.Console;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
-public class ModularityOptimizer
-
+public class ModularityOptimizer3
 {
     static double[] Qsupply;
     static double[] Qdemand;
     static double[][] svq;
 
-    public String test(String a, String b)
-    {
-        return a+b;
-    }
-    public static void main(String[] args) throws IOException
+    public String test(String aa,String ab,String ac,String ad,String ae,String af,String ag,String ah,String ai,String aj,String ak,String al) throws IOException
     {
         boolean printOutput, update;
         Clustering clustering;
@@ -39,49 +27,26 @@ public class ModularityOptimizer
         Network network;
         Random random;
         String inputFileName, outputFileName;
-        VOSClusteringTechnique VOSClusteringTechnique;
-        String qsupplyFileName = null;
-        String qdemandFileName = null;
-        String svqFileName = null;
+        VOSClusteringTechnique3 VOSClusteringTechnique3;
+        String qsupplyFileName;
+        String qdemandFileName;
+        String svqFileName;
 
-       if (args.length == 12)
-        {
-            inputFileName = args[0];
-            outputFileName = args[1];
-            modularityFunction = Integer.parseInt(args[2]);
-            resolution = Double.parseDouble(args[3]);
-            algorithm = Integer.parseInt(args[4]);
-            nRandomStarts = Integer.parseInt(args[5]);
-            nIterations = Integer.parseInt(args[6]);
-            randomSeed = Long.parseLong(args[7]);
-            printOutput = (Integer.parseInt(args[8]) > 0);
-            // reactive power information input
-            qsupplyFileName = args[9];
-            qdemandFileName = args[10];
-            svqFileName = args[11];
+        inputFileName = aa;
+        outputFileName = ab;
+        modularityFunction = Integer.parseInt(ac);
+        resolution = Double.parseDouble(ad);
+        algorithm = Integer.parseInt(ae);
+        nRandomStarts = Integer.parseInt(af);
+        nIterations = Integer.parseInt(ag);
+        randomSeed = Long.parseLong(ah);
+        printOutput = (Integer.parseInt(ai) > 0);
+        // reactive power information input
+        qsupplyFileName = aj;
+        qdemandFileName = ak;
+        svqFileName = al;
 
-            if (printOutput)
-            {
-                System.out.println("Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck");
-                System.out.println();
-            }
-        }
-        else
-        {
-            console = System.console();
-            System.out.println("Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck");
-            System.out.println();
-            inputFileName = console.readLine("Input file name: ");
-            outputFileName = console.readLine("Output file name: ");
-            modularityFunction = Integer.parseInt(console.readLine("Modularity function (1 = standard; 2 = alternative): "));
-            resolution = Double.parseDouble(console.readLine("Resolution parameter (e.g., 1.0): "));
-            algorithm = Integer.parseInt(console.readLine("Algorithm (1 = Louvain; 2 = Louvain with multilevel refinement; 3 = smart local moving): "));
-            nRandomStarts = Integer.parseInt(console.readLine("Number of random starts (e.g., 10): "));
-            nIterations = Integer.parseInt(console.readLine("Number of iterations (e.g., 10): "));
-            randomSeed = Long.parseLong(console.readLine("Random seed (e.g., 0): "));
-            printOutput = (Integer.parseInt(console.readLine("Print output (0 = no; 1 = yes): ")) > 0);
-            System.out.println();
-        }
+        System.out.println("Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck");
 
         if (printOutput)
         {
@@ -90,6 +55,7 @@ public class ModularityOptimizer
         }
 
         network = readInputFile(inputFileName, modularityFunction);
+
         /* read in the svq, qsupply and qdemand */
         /* qsupply */
         BufferedReader bufferedReader;
@@ -145,7 +111,7 @@ public class ModularityOptimizer
             if (printOutput && (nRandomStarts > 1))
                 System.out.format("Random start: %d%n", i + 1);
 
-            VOSClusteringTechnique = new VOSClusteringTechnique(network, resolution2);
+            VOSClusteringTechnique3 = new VOSClusteringTechnique3(network, resolution2);
 
             j = 0;
             update = true;
@@ -155,14 +121,14 @@ public class ModularityOptimizer
                     System.out.format("Iteration: %d%n", j + 1);
 
                 if (algorithm == 1)
-                    update = VOSClusteringTechnique.runLouvainAlgorithm(random);
+                    update = VOSClusteringTechnique3.runLouvainAlgorithm(random);
                 else if (algorithm == 2)
-                    update = VOSClusteringTechnique.runLouvainAlgorithmWithMultilevelRefinement(random);
+                    update = VOSClusteringTechnique3.runLouvainAlgorithmWithMultilevelRefinement(random);
                 else if (algorithm == 3)
-                    VOSClusteringTechnique.runSmartLocalMovingAlgorithm(random);
+                    VOSClusteringTechnique3.runSmartLocalMovingAlgorithm(random);
                 j++;
 
-                modularity = VOSClusteringTechnique.calcQualityFunction();
+                modularity = VOSClusteringTechnique3.calcQualityFunction();
 
                 if (printOutput && (nIterations > 1))
                     System.out.format("Modularity: %.4f%n", modularity);
@@ -171,7 +137,7 @@ public class ModularityOptimizer
 
             if (modularity > maxModularity)
             {
-                clustering = VOSClusteringTechnique.getClustering();
+                clustering = VOSClusteringTechnique3.getClustering();
                 maxModularity = modularity;
             }
 
@@ -197,11 +163,12 @@ public class ModularityOptimizer
             System.out.format("Number of communities: %d%n", clustering.getNClusters());
             System.out.format("Elapsed time: %f ms%n", Math.round((endTime - beginTime))/(nRandomStarts * 1.0));
             System.out.println();
-            System.out.println("Writing output file...");
+            //System.out.println("Writing output file...");
             System.out.println();
         }
 
-        writeOutputFile(outputFileName, clustering);
+        //writeOutputFile(outputFileName, clustering);
+        return "End of the line";
     }
 
     private static Network readInputFile(String fileName, int modularityFunction) throws IOException
