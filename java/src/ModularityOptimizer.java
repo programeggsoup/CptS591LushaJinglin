@@ -41,6 +41,7 @@ public class ModularityOptimizer
         nIterations = Integer.parseInt(niter);
         randomSeed = Long.parseLong(seed);
         printOutput = (Integer.parseInt(output) > 0);
+        
         // reactive power information input
         qsupplyFileName = qsupply;
         qdemandFileName = qdemand;
@@ -56,10 +57,10 @@ public class ModularityOptimizer
 
         network = readInputFile(inputFileName, modularityFunction);
 
-        /* read in the svq, qsupply and qdemand */
+        /* read in the qsupply, qdemand and svq */
         /* qsupply */
         BufferedReader bufferedReader;
-        bufferedReader = new BufferedReader(new FileReader(qsupplyFileName)); /* "data/data.txt" */
+        bufferedReader = new BufferedReader(new FileReader(qsupplyFileName)); /* "data.txt" */
         Qsupply = new double[network.nNodes];
         String[] tokensQs = bufferedReader.readLine().split("\n");
         for (int ii = 0; ii < tokensQs.length; ii++){
