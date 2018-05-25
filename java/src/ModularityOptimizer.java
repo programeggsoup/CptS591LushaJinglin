@@ -13,7 +13,6 @@ import java.util.Random;
 public class ModularityOptimizer
 {
 
-
     public String test(String inputfilename,String outputfilename,String modularityfunction,String res,String alg,String nrandom,String niter,String seed,String output,String qsupply,String qdemand,String svqinfo) throws IOException
     {
         boolean printOutput, update;
@@ -50,7 +49,6 @@ public class ModularityOptimizer
         if (printOutput)
         {
             System.out.println("Reading input file...");
-            System.out.println();
         }
 
         network = readInputFile(inputFileName, modularityFunction);
@@ -59,13 +57,16 @@ public class ModularityOptimizer
         PowerInformation powerInfo = new PowerInformation();
         powerInfo.readPowerFile(qsupplyFileName, qdemandFileName, svqFileName, network);
 
+        // write solution into file
+        BufferedWriter bufferedWriter;
+        bufferedWriter = new BufferedWriter(new FileWriter(outputFileName));
+
         if (printOutput)
         {
-            System.out.format("Number of nodes: %d%n", network.getNNodes());
-            System.out.format("Number of edges: %d%n", network.getNEdges());
-            System.out.println();
-            System.out.println("Running " + ((algorithm == 1) ? "Louvain algorithm" : ((algorithm == 2) ? "Louvain algorithm with multilevel refinement" : "smart local moving algorithm")) + "...");
-            System.out.println();
+            bufferedWriter.write("Number of nodes: " + String.format("%d",network.getNNodes()) + "\r\n");
+            bufferedWriter.write("Number of edges: " + String.format("%d", network.getNEdges()) + "\r\n");
+            bufferedWriter.write("Running " + ((algorithm == 1) ? "Louvain algorithm" : ((algorithm == 2) ? "Louvain algorithm with multilevel refinement" : "smart local moving algorithm")) + "...\r\n");
+            bufferedWriter.newLine();
         }
 
         resolution2 = ((modularityFunction == 1) ? (resolution / (2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks)) : resolution);
@@ -77,7 +78,7 @@ public class ModularityOptimizer
         for (i = 0; i < nRandomStarts; i++)
         {
             if (printOutput && (nRandomStarts > 1))
-                System.out.format("Random start: %d%n", i + 1);
+                bufferedWriter.write("Random start: " + String.format("%d", i+1) + "\r\n");
 
             VOSClusteringTechnique = new VOSClusteringTechnique(network, resolution2);
 
@@ -86,7 +87,7 @@ public class ModularityOptimizer
             do
             {
                 if (printOutput && (nIterations > 1))
-                    System.out.format("Iteration: %d%n", j + 1);
+                    bufferedWriter.write("Iteration: " + String.format("%d", j+1) + "\r\n");
 
                 if (algorithm == 1)
                     update = VOSClusteringTechnique.runLouvainAlgorithm(random);
@@ -99,7 +100,7 @@ public class ModularityOptimizer
                 modularity = VOSClusteringTechnique.calcQualityFunction();
 
                 if (printOutput && (nIterations > 1))
-                    System.out.format("Modularity: %.4f%n", modularity);
+                    bufferedWriter.write("Modularity: "+ String.format(" %.8f", modularity) + "\r\n");
             }
             while ((j < nIterations) && update);
 
@@ -112,8 +113,8 @@ public class ModularityOptimizer
             if (printOutput && (nRandomStarts > 1))
             {
                 if (nIterations == 1)
-                    System.out.format("Modularity: %.4f%n", modularity);
-                System.out.println();
+                    bufferedWriter.write("Modularity: "+ String.format(" %.8f", modularity) + "\r\n");
+                bufferedWriter.newLine();
             }
         }
         endTime = System.currentTimeMillis();
@@ -123,19 +124,22 @@ public class ModularityOptimizer
             if (nRandomStarts == 1)
             {
                 if (nIterations > 1)
-                    System.out.println();
-                System.out.format("Modularity: %.4f%n", maxModularity);
+                    bufferedWriter.newLine();
+                bufferedWriter.write("Modularity: "+ String.format(" %.8f", maxModularity) + "\r\n");
             }
             else
-                System.out.format("Maximum modularity in %d random starts: %.4f%n", nRandomStarts, maxModularity);
-            System.out.format("Number of communities: %d%n", clustering.getNClusters());
-            System.out.format("Elapsed time: %f ms%n", Math.round((endTime - beginTime))/(nRandomStarts * 1.0));
-            System.out.println();
-            //System.out.println("Writing output file...");
-            System.out.println();
-        }
+                bufferedWriter.write("Maximum modularity in " + String.format("%d", nRandomStarts) + " random starts: " + String.format("%.8f", maxModularity) + "\r\n");
+            bufferedWriter.write("Elapsed time: " +  String.format("%.8f", Math.round((endTime - beginTime))/(nRandomStarts * 1.0)) +"ms\r\n");
+            bufferedWriter.write("Number of Clusters: " + String.format("%d", clustering.getNClusters()) + "\r\n");
 
-        //writeOutputFile(outputFileName, clustering);
+            for (i = 0; i < clustering.nClusters; i++)
+            {
+                bufferedWriter.write(Arrays.toString(clustering.getNodesPerCluster()[i]));
+                bufferedWriter.newLine();
+            }
+        }
+        bufferedWriter.close();
+
         return "End of the line";
     }
 
@@ -222,23 +226,4 @@ public class ModularityOptimizer
         return network;
     }
 
-    private static void writeOutputFile(String fileName, Clustering clustering) throws IOException
-    {
-        BufferedWriter bufferedWriter;
-        int i, nNodes;
-
-        nNodes = clustering.getNNodes();
-
-        clustering.orderClustersByNNodes();
-
-        bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-
-        for (i = 0; i < nNodes; i++)
-        {
-            bufferedWriter.write(Integer.toString(clustering.getCluster(i)));
-            bufferedWriter.newLine();
-        }
-
-        bufferedWriter.close();
-    }
 }

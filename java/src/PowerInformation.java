@@ -67,10 +67,9 @@ public class PowerInformation {
 	/***
 	 * 
 	 * @param clustering
-	 * @param network
 	 * @return modified part modularity
 	 */
-	public double getModifiedPart(Clustering clustering, Network network) {
+	public static double getModifiedPart(Clustering clustering) {
 	    List<Double> Qbalance = new ArrayList<>();		
 	    List<Double> sensitivity = new ArrayList<>();
 	    int[][] nodesPerCluster = clustering.getNodesPerCluster();
@@ -103,9 +102,10 @@ public class PowerInformation {
 	    			count++;
 	    		}
 	    	}
-	    	double averageSVQ = totalSVQ/count;
+			double averageSVQ = 0;
+			if(count != 0)
+	    		averageSVQ = totalSVQ/count;
 	    	sensitivity.add(averageSVQ);
-	    	
 	    }
 	    
 	    double sumInfo = 0;

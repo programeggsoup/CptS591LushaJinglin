@@ -7,9 +7,11 @@
  */
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static java.lang.Double.MIN_VALUE;
 
 public class VOSClusteringTechnique
 {
@@ -88,10 +90,10 @@ public class VOSClusteringTechnique
         qualityFunction /= 2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks;
         
         // calculate modified modularity part
-        PowerInformation powerInfo = new PowerInformation();
-        double modifiedPart = powerInfo.getModifiedPart(clustering, network);
+        //PowerInformation powerInfo = new PowerInformation();
+        double modifiedPart = PowerInformation.getModifiedPart(clustering);
 
-        return qualityFunction-modifiedPart;
+        return qualityFunction - modifiedPart;
     }
 
     public boolean runLocalMovingAlgorithm()
@@ -165,6 +167,26 @@ public class VOSClusteringTechnique
             {
                 l = neighboringCluster[k];
                 qualityFunction = edgeWeightPerCluster[l] - network.nodeWeight[j] * clusterWeight[l] * resolution;
+
+                //modified modularity
+                int[] tempCluster = clustering.cluster.clone();
+                tempCluster[j] = l;
+                Set<Integer> numCluster = IntStream.of(tempCluster).boxed().collect(Collectors.toSet()); //put cluster information into a set, the set's size will be the nClusters
+                List<Integer> numIndexCluster = new ArrayList<>();
+                numIndexCluster.addAll(numCluster);
+                Collections.sort(numIndexCluster);// put this set into an ArrayList, then its index will be the new cluster No.
+                // Use numIndexCluster's index to set a new cluster information
+                for(int clusterIndex = 0; clusterIndex < numCluster.size(); clusterIndex++){
+                    for(int iCluster = 0; iCluster < tempCluster.length; iCluster++){
+                        if(tempCluster[iCluster] == numIndexCluster.get(clusterIndex))
+                            tempCluster[iCluster] = clusterIndex;
+                    }
+                }
+                Clustering newClustering = new Clustering(tempCluster); // use new cluster information to new a clustering
+                double modifiedModularityWithSVQ = PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(clustering);  // Calculate the modified modularity change
+                qualityFunction -= modifiedModularityWithSVQ;
+                /* End of the modified */
+
                 if ((qualityFunction > maxQualityFunction) || ((qualityFunction == maxQualityFunction) && (l < bestCluster)))
                 {
                     bestCluster = l;
