@@ -42,7 +42,7 @@ public class ModularityOptimizer
         randomSeed = Long.parseLong(seed);
         printOutput = (Integer.parseInt(output) > 0);
         
-        // reactive power information input
+        /* reactive power information input */
         qsupplyFileName = qsupply;
         qdemandFileName = qdemand;
         svqFileName = svqinfo;
@@ -62,33 +62,38 @@ public class ModularityOptimizer
         BufferedReader bufferedReader;
         bufferedReader = new BufferedReader(new FileReader(qsupplyFileName)); /* "data.txt" */
         Qsupply = new double[network.nNodes];
-        String[] tokensQs = bufferedReader.readLine().split("\n");
-        for (int ii = 0; ii < tokensQs.length; ii++){
-            Qsupply[ii] = Double.parseDouble(tokensQs[ii]);
+        String line;
+        int ii = 0;
+        //String[] tokensQs = bufferedReader.readLine().split("\n");
+        while ((line = bufferedReader.readLine()) != null){
+            Qsupply[ii] = Double.parseDouble(line);
+            ii++;
         }
         bufferedReader.close();
 
         /* qdemand */
         bufferedReader = new BufferedReader(new FileReader(qdemandFileName));
         Qdemand = new double[network.nNodes];
-        String[] tokensQd = bufferedReader.readLine().split("\n");
-        for (int ii = 0; ii < tokensQd.length; ii++){
-            Qdemand[ii] = Double.parseDouble(tokensQs[ii]);
+        ii = 0;
+        //String[] tokensQd = bufferedReader.readLine().split("\n");
+        while ((line = bufferedReader.readLine()) != null){
+        	Qdemand[ii] = Double.parseDouble(line);
+        	ii++;
         }
         bufferedReader.close();
 
         /* svq */
-        String line;
         bufferedReader = new BufferedReader(new FileReader(svqFileName));
         svq = new double[network.nNodes][network.nNodes];
         int count = 0;
         while ((line = bufferedReader.readLine()) != null){
             String[] tokens = line.split("\t");
             double[] svqi = new double[network.nNodes];
-            for(int ii = 0; ii < network.nNodes; ii++){
+            for(ii = 0; ii < network.nNodes; ii++){
                 svqi[ii] = Double.parseDouble(tokens[ii]);
             }
             svq[count] = svqi;
+            count++;
         }
         bufferedReader.close();
 
