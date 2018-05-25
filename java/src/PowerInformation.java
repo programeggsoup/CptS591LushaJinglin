@@ -64,8 +64,61 @@ public class PowerInformation {
 		}
 	}
 	
+	/***
+	 * 
+	 * @param clustering
+	 * @param network
+	 * @return modified part modularity
+	 */
 	public double getModifiedPart(Clustering clustering, Network network) {
-	    /* modify the modularity */
+	    List<Double> Qbalance = new ArrayList<>();		
+	    List<Double> sensitivity = new ArrayList<>();
+	    int[][] nodesPerCluster = clustering.getNodesPerCluster();
+	    int i,j,k;
+	    
+	    // for every cluster, calculate Qbalance and sensitivity
+	    for (i=0; i<clustering.nClusters; i++) {
+	    	// calculate Qbalance in one cluster
+	    	// nodes in this cluster
+	    	int[] nodesPerC = nodesPerCluster[i];
+	    	int Qs = 0; // sum of Qsupply
+	    	int Qd = 0; // sum of Qdemand
+	    	for (j=0; j<nodesPerC.length; j++) {
+	    		Qs += Qsupply[nodesPerC[j]];
+	    		Qd += Qdemand[nodesPerC[j]];
+	    	}
+	    	if (( Qs > Qd) || (Qd == 0) ) {
+	    		Qbalance.add((double) 0);
+	    	}
+	    	else {
+	    		Qbalance.add((double) (1-Math.abs(Qs/Qd)));
+	    	}
+	    	
+	    	double totalSVQ = 0;
+	    	int count = 0;
+	    	// calculate sensitivity in one cluster
+	    	for (j=0; j< nodesPerC.length; j++) {
+	    		for(k=j+1; k<nodesPerC.length; k++) {
+	    			totalSVQ = totalSVQ + SVQ[nodesPerC[j]][nodesPerC[k]];
+	    			count++;
+	    		}
+	    	}
+	    	double averageSVQ = totalSVQ/count;
+	    	sensitivity.add(averageSVQ);
+	    	
+	    }
+	    
+	    double sumInfo = 0;
+	    for (i=0; i<clustering.nClusters; i++) {
+	    	sumInfo = sumInfo + Qbalance.get(i) + sensitivity.get(i);
+	    }
+	    
+	    double modifiedPart = sumInfo/clustering.nClusters;
+		return modifiedPart;
+		
+		
+	    /* modify the modularity */	    
+	    /*
 	    List<Double> sensitivity = new ArrayList<>();
 	    List<Double> Qbalance = new ArrayList<>();
 	    int[] Qs = new int[clustering.nClusters];
@@ -73,6 +126,8 @@ public class PowerInformation {
 	    double[] evq = new double[clustering.nClusters];
 	    int[] com_number = new int[clustering.nClusters];
 	    int i, j;
+	    
+
 	    
 	    for (i = 0; i < network.nNodes; i++){
 	        j = clustering.cluster[i];
@@ -98,6 +153,8 @@ public class PowerInformation {
 	        allmod += (Qbalance.get(jj) + sensitivity.get(jj));
 	    }
 	    return allmod = allmod/Qs.length;
+	    
+	    */
 	}
 
 }

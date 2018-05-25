@@ -89,9 +89,9 @@ public class VOSClusteringTechnique
         
         // calculate modified modularity part
         PowerInformation powerInfo = new PowerInformation();
-        double allmod = powerInfo.getModifiedPart(clustering, network);
+        double modifiedPart = powerInfo.getModifiedPart(clustering, network);
 
-        return qualityFunction-allmod;
+        return qualityFunction-modifiedPart;
     }
 
     public boolean runLocalMovingAlgorithm()
