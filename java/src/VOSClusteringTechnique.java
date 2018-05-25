@@ -86,21 +86,14 @@ public class VOSClusteringTechnique
             qualityFunction -= clusterWeight[i] * clusterWeight[i] * resolution;
 
         qualityFunction /= 2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks;
-
-        /* find the cluster number */
-        int max = 0;
-        for (i = 0; i < network.nNodes; i++){
-            if(clustering.cluster[i] > max)
-                max = clustering.cluster[i];
-        }
-        max++;
-
+        
+        /* modified modularity */
         List<Double> sensitivity = new ArrayList<>();
         List<Double> Qbalance = new ArrayList<>();
-        int[] Qs = new int[max];
-        int[] Qd = new int[max];
-        double[] evq = new double[max];
-        int[] com_number = new int[max];
+        int[] Qs = new int[clustering.nClusters];
+        int[] Qd = new int[clustering.nClusters];
+        double[] evq = new double[clustering.nClusters];
+        int[] com_number = new int[clustering.nClusters];
 
         for (i = 0; i < network.nNodes; i++){
             j = clustering.cluster[i];
