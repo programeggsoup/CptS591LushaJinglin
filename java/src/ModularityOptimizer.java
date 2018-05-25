@@ -77,8 +77,8 @@ public class ModularityOptimizer
         random = new Random(randomSeed);
         for (i = 0; i < nRandomStarts; i++)
         {
-            if (printOutput && (nRandomStarts > 1))
-                bufferedWriter.write("Random start: " + String.format("%d", i+1) + "\r\n");
+            //if (printOutput && (nRandomStarts > 1))
+                //bufferedWriter.write("Random start: " + String.format("%d", i+1) + "\r\n");
 
             VOSClusteringTechnique = new VOSClusteringTechnique(network, resolution2);
 
@@ -86,8 +86,8 @@ public class ModularityOptimizer
             update = true;
             do
             {
-                if (printOutput && (nIterations > 1))
-                    bufferedWriter.write("Iteration: " + String.format("%d", j+1) + "\r\n");
+                //if (printOutput && (nIterations > 1))
+                    //bufferedWriter.write("Iteration: " + String.format("%d", j+1) + "\r\n");
 
                 if (algorithm == 1)
                     update = VOSClusteringTechnique.runLouvainAlgorithm(random);
@@ -99,8 +99,8 @@ public class ModularityOptimizer
 
                 modularity = VOSClusteringTechnique.calcQualityFunction();
 
-                if (printOutput && (nIterations > 1))
-                    bufferedWriter.write("Modularity: "+ String.format(" %.8f", modularity) + "\r\n");
+                //if (printOutput && (nIterations > 1))
+                    //bufferedWriter.write("Modularity: "+ String.format(" %.8f", modularity) + "\r\n");
             }
             while ((j < nIterations) && update);
 
@@ -112,9 +112,9 @@ public class ModularityOptimizer
 
             if (printOutput && (nRandomStarts > 1))
             {
-                if (nIterations == 1)
-                    bufferedWriter.write("Modularity: "+ String.format(" %.8f", modularity) + "\r\n");
-                bufferedWriter.newLine();
+                //if (nIterations == 1)
+                    //bufferedWriter.write("Modularity: "+ String.format(" %.8f", modularity) + "\r\n");
+                //bufferedWriter.newLine();
             }
         }
         endTime = System.currentTimeMillis();
@@ -123,9 +123,9 @@ public class ModularityOptimizer
         {
             if (nRandomStarts == 1)
             {
-                if (nIterations > 1)
-                    bufferedWriter.newLine();
-                bufferedWriter.write("Modularity: "+ String.format(" %.8f", maxModularity) + "\r\n");
+                //if (nIterations > 1)
+                    //bufferedWriter.newLine();
+                //bufferedWriter.write("Modularity: "+ String.format(" %.8f", maxModularity) + "\r\n");
             }
             else
                 bufferedWriter.write("Maximum modularity in " + String.format("%d", nRandomStarts) + " random starts: " + String.format("%.8f", maxModularity) + "\r\n");
@@ -134,7 +134,12 @@ public class ModularityOptimizer
 
             for (i = 0; i < clustering.nClusters; i++)
             {
-                bufferedWriter.write(Arrays.toString(clustering.getNodesPerCluster()[i]));
+            	bufferedWriter.write("[");
+            	for(j = 0; j < clustering.getNodesPerCluster()[i].length -1; j++) {
+            		bufferedWriter.write(Integer.toString(clustering.getNodesPerCluster()[i][j] + 1) + ",");
+            	}
+            	bufferedWriter.write(Integer.toString(clustering.getNodesPerCluster()[i][j] + 1));
+            	bufferedWriter.write("]");
                 bufferedWriter.newLine();
             }
         }
