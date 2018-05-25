@@ -92,7 +92,7 @@ print 'New mod: ',newmod
 
 # call Java function
 jvmPath = jpype.getDefaultJVMPath() 
-classpath = "C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\java\\out\\production\\multilevel"
+classpath = "..\\java\\out\\production\\multilevel"
 jvmArg = "-Djava.class.path=" + classpath 
 if not jpype.isJVMStarted():
     jpype.startJVM(jvmPath,jvmArg)
@@ -101,10 +101,10 @@ if not jpype.isJVMStarted():
 ModularityOptimizer = jpype.JClass("ModularityOptimizer")     
 m = ModularityOptimizer()   
 try:   
-    print m.test("C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\networkInfo.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\output.txt","1","1","2","4","10","336","1","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\Qsupply.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\Qdemand.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\SVQ.txt")
+    print m.test("networkInfo.txt","output.txt","1","1","2","4","10","336","1","Qsupply.txt","Qdemand.txt","SVQ.txt")
 except jpype.JavaException, ex:
     print ex.javaClass(), ex.message()
     print ex.stacktrace() 
 
-print "End of ietration!!"
+print "Completed!"
 jpype.shutdownJVM()
