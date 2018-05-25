@@ -87,38 +87,9 @@ public class VOSClusteringTechnique
 
         qualityFunction /= 2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks;
         
-        /* modify the modularity */
-        List<Double> sensitivity = new ArrayList<>();
-        List<Double> Qbalance = new ArrayList<>();
-        int[] Qs = new int[clustering.nClusters];
-        int[] Qd = new int[clustering.nClusters];
-        double[] evq = new double[clustering.nClusters];
-        int[] com_number = new int[clustering.nClusters];
-
-        for (i = 0; i < network.nNodes; i++){
-            j = clustering.cluster[i];
-            Qs[j] += ModularityOptimizer.Qsupply[i];
-            Qd[j] += ModularityOptimizer.Qdemand[i];
-            for(int ii = i+1; ii < network.nNodes; ii++){
-                int jj = clustering.cluster[ii];
-                if(j == jj){
-                    evq[j] += ModularityOptimizer.svq[i][ii];
-                    com_number[j] ++;
-                }
-            }
-        }
-        double allmod = 0.0;
-        for(int jj = 0; jj < Qs.length; jj++){
-            if(Qs[jj]>Qd[jj]||Qd[jj]==0){
-                Qbalance.add(0.0);
-            }
-            else{
-                Qbalance.add(1.0-Math.abs((double)Qs[jj]/(double)Qd[jj]));
-            }
-            sensitivity.add(evq[jj]/com_number[jj]);
-            allmod += (Qbalance.get(jj) + sensitivity.get(jj));
-        }
-        allmod = allmod/Qs.length;
+        // calculate modified modularity part
+        PowerInformation powerInfo = new PowerInformation();
+        double allmod = powerInfo.getModifiedPart(clustering, network);
 
         return qualityFunction-allmod;
     }

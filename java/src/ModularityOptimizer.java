@@ -12,9 +12,7 @@ import java.util.Random;
 
 public class ModularityOptimizer
 {
-    static double[] Qsupply;
-    static double[] Qdemand;
-    static double[][] svq;
+
 
     public String test(String inputfilename,String outputfilename,String modularityfunction,String res,String alg,String nrandom,String niter,String seed,String output,String qsupply,String qdemand,String svqinfo) throws IOException
     {
@@ -57,45 +55,9 @@ public class ModularityOptimizer
 
         network = readInputFile(inputFileName, modularityFunction);
 
-        /* read in the qsupply, qdemand and svq */
-        /* qsupply */
-        BufferedReader bufferedReader;
-        bufferedReader = new BufferedReader(new FileReader(qsupplyFileName)); /* "data.txt" */
-        Qsupply = new double[network.nNodes];
-        String line;
-        int ii = 0;
-        //String[] tokensQs = bufferedReader.readLine().split("\n");
-        while ((line = bufferedReader.readLine()) != null){
-            Qsupply[ii] = Double.parseDouble(line);
-            ii++;
-        }
-        bufferedReader.close();
-
-        /* qdemand */
-        bufferedReader = new BufferedReader(new FileReader(qdemandFileName));
-        Qdemand = new double[network.nNodes];
-        ii = 0;
-        //String[] tokensQd = bufferedReader.readLine().split("\n");
-        while ((line = bufferedReader.readLine()) != null){
-        	Qdemand[ii] = Double.parseDouble(line);
-        	ii++;
-        }
-        bufferedReader.close();
-
-        /* svq */
-        bufferedReader = new BufferedReader(new FileReader(svqFileName));
-        svq = new double[network.nNodes][network.nNodes];
-        int count = 0;
-        while ((line = bufferedReader.readLine()) != null){
-            String[] tokens = line.split("\t");
-            double[] svqi = new double[network.nNodes];
-            for(ii = 0; ii < network.nNodes; ii++){
-                svqi[ii] = Double.parseDouble(tokens[ii]);
-            }
-            svq[count] = svqi;
-            count++;
-        }
-        bufferedReader.close();
+        // read power information file
+        PowerInformation powerInfo = new PowerInformation();
+        powerInfo.readPowerFile(qsupplyFileName, qdemandFileName, svqFileName, network);
 
         if (printOutput)
         {
