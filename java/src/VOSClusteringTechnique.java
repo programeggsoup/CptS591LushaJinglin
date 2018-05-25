@@ -87,7 +87,7 @@ public class VOSClusteringTechnique
 
         qualityFunction /= 2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks;
         
-        /* modified modularity */
+        /* modify the modularity */
         List<Double> sensitivity = new ArrayList<>();
         List<Double> Qbalance = new ArrayList<>();
         int[] Qs = new int[clustering.nClusters];
