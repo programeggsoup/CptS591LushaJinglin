@@ -72,14 +72,14 @@ public class PowerInformation {
 	public static double getModifiedPart(Clustering clustering) {
 	    List<Double> Qbalance = new ArrayList<>();		
 	    List<Double> sensitivity = new ArrayList<>();
-	    int[][] nodesPerCluster = clustering.getNodesPerCluster();
+	    int[][] nodesPerCluster = clustering.getNodesPerCluster().clone();	//add clone
 	    int i,j,k;
 	    
 	    // for every cluster, calculate Qbalance and sensitivity
 	    for (i=0; i<clustering.nClusters; i++) {
 	    	// calculate Qbalance in one cluster
 	    	// nodes in this cluster
-	    	int[] nodesPerC = nodesPerCluster[i];
+	    	int[] nodesPerC = nodesPerCluster[i].clone();
 	    	int Qs = 0; // sum of Qsupply
 	    	int Qd = 0; // sum of Qdemand
 	    	for (j=0; j<nodesPerC.length; j++) {

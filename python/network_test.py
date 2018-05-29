@@ -43,6 +43,7 @@ for i in range(nodeNumber):
             Bmatrix[i,i]=Bmatrix[i,i]-Bmatrix[i,j]
         
 SVQ=numpy.linalg.pinv(Bmatrix)
+#SVQ=-Bmatrix
 
 with open(str(sys.argv[3]),'rb') as csvfileQ:
     csvreaderQ=csv.reader(csvfileQ)
@@ -101,10 +102,10 @@ if not jpype.isJVMStarted():
 ModularityOptimizer = jpype.JClass("ModularityOptimizer")     
 m = ModularityOptimizer()   
 try:   
-    print m.test("networkInfo.txt","output.txt","1","1","2","4","10","336","1","Qsupply.txt","Qdemand.txt","SVQ.txt")
+    print m.test("networkInfo.txt","output.txt","1","1","2","10","10","336","1","Qsupply.txt","Qdemand.txt","SVQ.txt")
 except jpype.JavaException, ex:
     print ex.javaClass(), ex.message()
     print ex.stacktrace() 
 
-print "Completed!"
+print "End of iteration!!"
 jpype.shutdownJVM()

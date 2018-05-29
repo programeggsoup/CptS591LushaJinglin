@@ -88,7 +88,7 @@ public class VOSClusteringTechnique
             qualityFunction -= clusterWeight[i] * clusterWeight[i] * resolution;
 
         qualityFunction /= 2 * network.getTotalEdgeWeight() + network.totalEdgeWeightSelfLinks;
-        
+
         // calculate modified modularity part
         //PowerInformation powerInfo = new PowerInformation();
         double modifiedPart = PowerInformation.getModifiedPart(clustering);
@@ -137,6 +137,7 @@ public class VOSClusteringTechnique
         neighboringCluster = new int[network.nNodes - 1];
         nStableNodes = 0;
         i = 0;
+        //int count = 0;
         do
         {
             j = nodePermutation[i];
@@ -169,6 +170,7 @@ public class VOSClusteringTechnique
                 qualityFunction = edgeWeightPerCluster[l] - network.nodeWeight[j] * clusterWeight[l] * resolution;
 
                 //modified modularity
+                // the new clustering may be
                 int[] tempCluster = clustering.cluster.clone();
                 tempCluster[j] = l;
                 Set<Integer> numCluster = IntStream.of(tempCluster).boxed().collect(Collectors.toSet()); //put cluster information into a set, the set's size will be the nClusters
@@ -183,7 +185,31 @@ public class VOSClusteringTechnique
                     }
                 }
                 Clustering newClustering = new Clustering(tempCluster); // use new cluster information to new a clustering
-                double modifiedModularityWithSVQ = PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(clustering);  // Calculate the modified modularity change
+
+                // the original clustering trim
+                int[] originalCluster = clustering.cluster.clone();
+                Set<Integer> oNumCluster = IntStream.of(originalCluster).boxed().collect(Collectors.toSet()); //put cluster information into a set, the set's size will be the nClusters
+                List<Integer> oNumIndexCluster = new ArrayList<>();
+                oNumIndexCluster.addAll(oNumCluster);
+                Collections.sort(oNumIndexCluster);// put this set into an ArrayList, then its index will be the new cluster No.
+                // Use numIndexCluster's index to set a new cluster information
+                for(int clusterIndex = 0; clusterIndex < oNumCluster.size(); clusterIndex++){
+                    for(int iCluster = 0; iCluster < originalCluster.length; iCluster++){
+                        if(originalCluster[iCluster] == oNumIndexCluster.get(clusterIndex))
+                            originalCluster[iCluster] = clusterIndex;
+                    }
+                }
+                Clustering originalClustering = new Clustering(originalCluster); // use new cluster information to new a clustering
+
+                //PowerInformation.getModifiedPart(originalClustering);
+                //PowerInformation.getModifiedPart(newClustering);
+                double modifiedModularityWithSVQ = PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering);  // Calculate the modified modularity change
+                //double modifiedModularityWithSVQ = Math.abs(PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering));  // Calculate the modified modularity change
+                /*if (PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering) < 0) {
+                    System.out.println("less than 0:" + (PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering)) + "\ncluster:");
+                    System.out.println(Arrays.toString(originalCluster));
+                    System.out.println(Arrays.toString(tempCluster));
+                }*/
                 qualityFunction -= modifiedModularityWithSVQ;
                 /* End of the modified */
 
@@ -212,6 +238,12 @@ public class VOSClusteringTechnique
             }
 
             i = (i < network.nNodes - 1) ? (i + 1) : 0;
+
+            // If we meet a symmetry problem and the clustering problem struggling with two choices, then we can stop it with at one of the symmetry method
+            /*if((nStableNodes == 1) && (count > PowerInformation.Qsupply.length * 100)){
+                break;
+            }
+            count++;*/
         }
         while (nStableNodes < network.nNodes);
 
