@@ -127,10 +127,12 @@ public class ModularityOptimizer
                     //bufferedWriter.newLine();
                 //bufferedWriter.write("Modularity: "+ String.format(" %.8f", maxModularity) + "\r\n");
             }
-            else
+            else {
                 bufferedWriter.write("Maximum modularity in " + String.format("%d", nRandomStarts) + " random starts: " + String.format("%.8f", maxModularity) + "\r\n");
-            bufferedWriter.write("Elapsed time: " +  String.format("%.8f", Math.round((endTime - beginTime))/(nRandomStarts * 1.0)) +"ms\r\n");
-            bufferedWriter.write("Number of Clusters: " + String.format("%d", clustering.getNClusters()) + "\r\n");
+                bufferedWriter.write("Elapsed time: " +  String.format("%.8f", Math.round((endTime - beginTime))/(nRandomStarts * 1.0)) +"ms\r\n");
+                bufferedWriter.write("Number of Clusters: " + String.format("%d", clustering.getNClusters()) + "\r\n");
+            }
+
 
             for (i = 0; i < clustering.nClusters; i++)
             {

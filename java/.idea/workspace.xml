@@ -17,7 +17,7 @@
           <file leaf-file-name="ModularityOptimizer.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/ModularityOptimizer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="19">
+                <state relative-caret-position="17">
                   <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
                 </state>
               </provider>
@@ -26,7 +26,7 @@
           <file leaf-file-name="VOSClusteringTechnique.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/VOSClusteringTechnique.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2907">
+                <state relative-caret-position="2601">
                   <caret line="185" column="17" selection-start-line="185" selection-start-column="17" selection-end-line="185" selection-end-column="17" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
@@ -52,7 +52,7 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="VOSClusteringTechnique.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="VOSClusteringTechnique.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/VOSClusteringTechnique.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="251">
@@ -77,11 +77,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="test.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="test.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/test.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="171">
-                  <caret line="9" column="44" lean-forward="true" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+                <state relative-caret-position="153">
+                  <caret line="9" column="88" selection-start-line="9" selection-start-column="88" selection-end-line="9" selection-end-column="88" />
                 </state>
               </provider>
             </entry>
@@ -89,7 +89,7 @@
           <file leaf-file-name="Clustering.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Clustering.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1767">
+                <state relative-caret-position="1581">
                   <caret line="117" column="49" selection-start-line="117" selection-start-column="49" selection-end-line="117" selection-end-column="49" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -101,7 +101,7 @@
           <file leaf-file-name="PowerInformation.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/PowerInformation.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1311">
+                <state relative-caret-position="1173">
                   <caret line="74" selection-start-line="74" selection-end-line="74" />
                 </state>
               </provider>
@@ -139,14 +139,14 @@
         <option value="$PROJECT_DIR$/src/ModularityOptimizer3.java" />
         <option value="$PROJECT_DIR$/src/PowerInformation.java" />
         <option value="$PROJECT_DIR$/src/Clustering.java" />
-        <option value="$PROJECT_DIR$/src/test.java" />
         <option value="$PROJECT_DIR$/src/VOSClusteringTechnique.java" />
+        <option value="$PROJECT_DIR$/src/test.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="697" />
+    <option name="x" value="-8" />
+    <option name="width" value="698" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectView">
@@ -155,8 +155,8 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -286,35 +286,34 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.45007923" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="6" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.4610493" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43986255" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12518302" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12490242" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.5007949" />
       <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.5007949" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24860853" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.45007923" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -501,13 +500,7 @@
     <entry file="file://$PROJECT_DIR$/src/ModularityOptimizer2.java" />
     <entry file="file://$PROJECT_DIR$/src/VOSClusteringTechnique3.java" />
     <entry file="file://$PROJECT_DIR$/src/ModularityOptimizer3.java" />
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/java.base/java/io/FileReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/java.base/java/io/FileReader.java" />
     <entry file="file://$PROJECT_DIR$/src/Arrays2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1520">
@@ -696,13 +689,7 @@
     <entry file="file://$PROJECT_DIR$/src/ModularityOptimizer2.java" />
     <entry file="file://$PROJECT_DIR$/src/VOSClusteringTechnique3.java" />
     <entry file="file://$PROJECT_DIR$/src/ModularityOptimizer3.java" />
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/java.base/java/lang/Double.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="523" selection-start-line="523" selection-end-line="523" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/java.base/java/lang/Double.java" />
     <entry file="file://$PROJECT_DIR$/src/Network.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
@@ -719,14 +706,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PowerInformation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
+        <state relative-caret-position="1173">
           <caret line="74" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Clustering.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1767">
+        <state relative-caret-position="1581">
           <caret line="117" column="49" selection-start-line="117" selection-start-column="49" selection-end-line="117" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -736,15 +723,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ModularityOptimizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
+        <state relative-caret-position="17">
           <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="44" lean-forward="true" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -768,6 +748,13 @@
             <element signature="e#1352#1353#0" expanded="true" />
             <element signature="e#1396#1397#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="88" selection-start-line="9" selection-start-column="88" selection-end-line="9" selection-end-column="88" />
         </state>
       </provider>
     </entry>
@@ -811,7 +798,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>10</last-edited>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

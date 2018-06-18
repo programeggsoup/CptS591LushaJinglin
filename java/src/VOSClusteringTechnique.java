@@ -203,7 +203,11 @@ public class VOSClusteringTechnique
 
                 //PowerInformation.getModifiedPart(originalClustering);
                 //PowerInformation.getModifiedPart(newClustering);
-                double modifiedModularityWithSVQ = PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering);  // Calculate the modified modularity change
+               
+                /* not sure the qualityFunction above is difference or not. If yes, use the first one, if no, use the second one. */
+                //double modifiedModularityWithSVQ = PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering);  // Calculate the modified modularity change
+                double modifiedModularityWithSVQ = PowerInformation.getModifiedPart(newClustering);
+                
                 //double modifiedModularityWithSVQ = Math.abs(PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering));  // Calculate the modified modularity change
                 /*if (PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering) < 0) {
                     System.out.println("less than 0:" + (PowerInformation.getModifiedPart(newClustering) - PowerInformation.getModifiedPart(originalClustering)) + "\ncluster:");

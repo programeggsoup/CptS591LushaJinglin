@@ -34,15 +34,15 @@ with open(str(sys.argv[2]),'rb') as csvfileBranch:
     for row in mycsvBranch:
         B=(1/complex(float(row[2]),float(row[3]))).imag
         networkGraph.add_edge(row[0],row[1])
-        Bmatrix[int(row[0])-1,int(row[1])-1]=B
-        Bmatrix[int(row[1])-1,int(row[0])-1]=B
+        Bmatrix[int(row[0])-1,int(row[1])-1]=-B
+        Bmatrix[int(row[1])-1,int(row[0])-1]=-B
 
 for i in range(nodeNumber):
     for j in range(nodeNumber):
         if j!=i:
             Bmatrix[i,i]=Bmatrix[i,i]-Bmatrix[i,j]
         
-SVQ=numpy.linalg.pinv(Bmatrix)
+SVQ=-numpy.linalg.pinv(Bmatrix)
 #SVQ=-Bmatrix
 
 with open(str(sys.argv[3]),'rb') as csvfileQ:

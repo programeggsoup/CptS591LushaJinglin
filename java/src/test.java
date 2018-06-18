@@ -7,7 +7,8 @@ public class test {
 		ModularityOptimizer modOpt = new ModularityOptimizer();
 		try {
 			System.out.println("Java Testing Begins!");
-			String testresult = modOpt.test("..\\python\\networkInfo.txt","..\\python\\output.txt","1","1","2","100","10","336","1","..\\python\\Qsupply.txt","..\\python\\Qdemand.txt","..\\python\\SVQ.txt");
+			// String testresult = modOpt.test("..\\python\\networkInfo.txt","..\\python\\output.txt","1","1","2","1","10","336","1","..\\python\\Qsupply.txt","..\\python\\Qdemand.txt","..\\python\\SVQ.txt");
+			String testresult = modOpt.test("C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\networkInfo.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\output.txt","1","1","2","20","10","336","1","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\Qsupply.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\Qdemand.txt","C:\\Users\\user\\OneDrive\\Documents\\eclipse-workspace\\CptS591LushaJinglin\\python\\SVQ.txt");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

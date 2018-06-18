@@ -12,8 +12,8 @@ public class PowerInformation {
 	
 	public void readPowerFile (String qsupplyFileName, String qdemandFileName, String svqFileName, Network network) {
 		/* read in the qsupply, qdemand and SVQ */
-        /* qsupply */
         try {
+            /* qsupply */
 			BufferedReader bufferedReader;
 			bufferedReader = new BufferedReader(new FileReader(qsupplyFileName)); /* "data.txt" */
 			Qsupply = new double[network.nNodes];
@@ -75,7 +75,7 @@ public class PowerInformation {
 	    int[][] nodesPerCluster = clustering.getNodesPerCluster().clone();	//add clone
 	    int i,j,k;
 	    
-	    // for every cluster, calculate Qbalance and sensitivity
+	    // for every cluster, calculate Qbalance and SVQ sensitivity
 	    for (i=0; i<clustering.nClusters; i++) {
 	    	// calculate Qbalance in one cluster
 	    	// nodes in this cluster
@@ -93,9 +93,9 @@ public class PowerInformation {
 	    		Qbalance.add((double) (1-Math.abs(Qs/Qd)));
 	    	}
 	    	
+	    	// calculate SVQ sensitivity in one cluster
 	    	double totalSVQ = 0;
 	    	int count = 0;
-	    	// calculate sensitivity in one cluster
 	    	for (j=0; j< nodesPerC.length; j++) {
 	    		for(k=j+1; k<nodesPerC.length; k++) {
 	    			totalSVQ = totalSVQ + SVQ[nodesPerC[j]][nodesPerC[k]];
@@ -103,8 +103,9 @@ public class PowerInformation {
 	    		}
 	    	}
 			double averageSVQ = 0;
-			if(count != 0)
+			if(count != 0) {
 	    		averageSVQ = totalSVQ/count;
+			}
 	    	sensitivity.add(averageSVQ);
 	    }
 	    
@@ -117,7 +118,7 @@ public class PowerInformation {
 		return modifiedPart;
 		
 		
-	    /* modify the modularity */	    
+  
 	    /*
 	    List<Double> sensitivity = new ArrayList<>();
 	    List<Double> Qbalance = new ArrayList<>();
