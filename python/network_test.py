@@ -102,7 +102,7 @@ if not jpype.isJVMStarted():
 ModularityOptimizer = jpype.JClass("ModularityOptimizer")     
 m = ModularityOptimizer()   
 try:   
-    print m.test("networkInfo.txt","output.txt","1","1","2","10","10","336","1","Qsupply.txt","Qdemand.txt","SVQ.txt")
+    print m.test("networkInfo.txt","output.txt","1","1","2","2","10","336","1","Qsupply.txt","Qdemand.txt","SVQ.txt")
 except jpype.JavaException, ex:
     print ex.javaClass(), ex.message()
     print ex.stacktrace() 
